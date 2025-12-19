@@ -1,3 +1,4 @@
+// api/submit.js  (Vercel Serverless Function)
 module.exports = async (req, res) => {
     try {
       if (req.method !== 'POST') {
@@ -11,11 +12,9 @@ module.exports = async (req, res) => {
       }
   
       let body = req.body;
-  
       if (typeof body === 'string') {
         try { body = JSON.parse(body); } catch { body = null; }
       }
-  
       if (!body || typeof body !== 'object') {
         return res.status(400).json({ error: 'Invalid JSON body' });
       }
@@ -37,7 +36,7 @@ module.exports = async (req, res) => {
         phone,
         telegram: body.telegram || null,
         source: 'telegram-webapp',
-        ts: Date.now()
+        ts: Date.now(),
       };
   
       const r = await fetch(WEBHOOK_URL, {
@@ -54,7 +53,7 @@ module.exports = async (req, res) => {
         return res.status(502).json({
           error: 'Watbot webhook error',
           status: r.status,
-          body: json || text || null
+          body: json || text || null,
         });
       }
   
@@ -62,7 +61,7 @@ module.exports = async (req, res) => {
     } catch (e) {
       return res.status(500).json({
         error: 'Unhandled server error',
-        message: e && e.message ? e.message : 'unknown'
+        message: e && e.message ? e.message : 'unknown',
       });
     }
   };

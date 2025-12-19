@@ -534,13 +534,12 @@
                 }
                 
                 // Send POST request to webhook
-                const response = await fetch(WEBHOOK_URL, {
+                const response = await fetch('/api/submit', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(formData)
-                });
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                  });
+                  
                 
                 if (!response.ok) {
                     throw new Error(`Ошибка сервера: ${response.status} ${response.statusText}`);
